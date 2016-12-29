@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid p-t-3 p-b-2">
+        <div class="container">
+            <div class="col-sm-12 btn-clear-lg p-l-1 ">
+                ERROR 404 - Strona nie odnaleziona! {{ status_text }}
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 10px">
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: url({{ asset('assets/img/404.gif') }}) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 5px red;
+        }
+    </style>
+{% endblock %}
