@@ -51,6 +51,9 @@
     <div class="row placeholders">
         <div class="col-xs-6 col-sm-4 placeholder text-xs-center">
             <h4>Nowe zamówienia</h4>
+            <ul id="newInvoiceList" class="list-group">
+
+            </ul>
             <a href="#" class="text-muted">Zobacz nowe zamówienia</a>
         </div>
         <div class="col-xs-6 col-sm-4 placeholder text-xs-center">
@@ -66,4 +69,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        MRS.homepage();
+    </script>
 {% endblock %}

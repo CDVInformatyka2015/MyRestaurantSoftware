@@ -15,4 +15,16 @@ class DefaultController extends Controller
     {
         return $this->render('default/index.html.twig');
     }
+
+    /**
+     * @Route("/invoice/{id}", name="invoiceList")
+     */
+    public function invoiceAction(Request $request, $id = null)
+    {
+        if ($id == null){
+
+        }
+
+        return $this->render('default/index.html.twig');
+    }
 }

@@ -78,6 +78,10 @@
             integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"
             crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/js/rest.js') }}"></script>
+    <script>
+        MRS.init("{{ url('homepage') }}");
+    </script>
 {% endblock %}
 </body>
 </html>
