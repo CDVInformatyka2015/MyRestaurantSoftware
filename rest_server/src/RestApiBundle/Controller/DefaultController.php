@@ -2,22 +2,21 @@
 
 namespace RestApiBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use FOS\RestBundle\Controller\Annotations\Route;
+use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouteCollection;
-use JMS\Serializer\SerializerBuilder;
 
-class DefaultController extends Controller
+class DefaultController extends FOSRestController
 {
 
     /**
      * Zwrot wszystkich routów dostępnych przez API
-     * @Route("/", name="api.Homepage")
+     * @Route("/doc", name="api.Homepage")
      */
     public function indexAction()
     {
-        $router = $this->container->get('router');
+        $router = $this->get('router');
         $collection = $router->getRouteCollection();
         $allRoutes = $collection->all();
 
@@ -40,48 +39,37 @@ class DefaultController extends Controller
             }
         }
 
-        $serializer = $this->container->get('jms_serializer');
-        $data = $serializer->serialize($routes, 'json');
-        return new Response(
-            $data,
-            Response::HTTP_OK,
-            ['content-type' => 'application/json']
-        );
+        $view = $this->view($routes);
+        return $this->handleView($view);
     }
 
     /**
-     * @Route("/invoices")
+     * Zaloguj sie i pobierz token
+     * @Route("login", name="api.login")
      */
-    public function invoicesAction()
+    public function tokenAuthentication(Request $request)
     {
-        $serializer = $this->container->get('jms_serializer');
+        $username = $request->request->get('username');
+        $password = $request->request->get('password');
 
-        $invoices = $this->getDoctrine()->getRepository('RestApiBundle:Invoices')->createQueryBuilder('p')
-            ->setMaxResults(25)->getQuery()->getResult();
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')
+            ->findOneBy(['username' => $username]);
 
-        $data = $serializer->serialize($invoices, 'json');
-        return new Response(
-            $data,
-            Response::HTTP_OK,
-            ['content-type' => 'application/json']
-        );
-    }
-
-    /**
-     * @Route("/invoices/{id}")
-     */
-    public function invoicesIdAction($id)
-    {
-        $serializer = $this->container->get('jms_serializer');
-
-        $em = $this->getDoctrine();
-        $invoice = $em->getRepository('RestApiBundle:Invoices')->findOneBy(['id' => $id]);
-
-        if ($invoice) {
-            $data = $serializer->serialize($invoice, 'json');
-            return new Response($data, 200);
+        if(!$user) {
+            $view = $this->view(['status' => 'unauthorized'], 403);
+            return $this->handleView($view);
         }
-        return new Response('', 404);
+
+        if(!$this->get('security.password_encoder')->isPasswordValid($user, $password)) {
+            $view = $this->view(['status' => 'unauthorized'], 403);
+            return $this->handleView($view);
+        }
+
+        $token = $this->get('lexik_jwt_authentication.encoder')
+            ->encode(['username' => $user->getUsername()]);
+
+        $view = $this->view(['token' => $token], 200);
+        return $this->handleView($view);
     }
 
 }
