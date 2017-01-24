@@ -3,6 +3,7 @@
 namespace RestApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Products
@@ -25,6 +26,8 @@ class Products
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotNull()
      */
     private $name;
 
@@ -32,6 +35,10 @@ class Products
      * @var int
      *
      * @ORM\Column(name="category", type="integer")
+     *
+     * @Assert\NotNull()
+     * @Assert\Type("numeric")
+     * @Assert\Range(min="1")
      */
     private $category;
 
@@ -39,6 +46,12 @@ class Products
      * @var array
      *
      * @ORM\Column(name="components", type="json_array")
+     *
+     * @Assert\NotNull()
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private $components;
 
@@ -46,6 +59,10 @@ class Products
      * @var float
      *
      * @ORM\Column(name="cost", type="float")
+     *
+     * @Assert\NotNull()
+     * @Assert\Type("float")
+     *
      */
     private $cost;
 
@@ -53,6 +70,9 @@ class Products
      * @var string
      *
      * @ORM\Column(name="note", type="string", length=255, nullable=true)
+     *
+     * @Assert\Type("string")
+     * @Assert\Length(max="255")
      */
     private $note;
 

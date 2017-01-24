@@ -36,3 +36,9 @@ Commands
     - `php bin/console fos:user:promote testuser ROLE_SUPER_ADMIN` - Promowanie użytkownika na super admina
 - Controllers
     - `php bin/console generate:controller` - Generator kontrolerów
+    
+Kolekcja Postman
+----------------
+Api można przetestować za pomocą kolekcji do Postmana znajdującej się pod adresem:
+
+https://www.getpostman.com/collections/837a988c140de1437ec1
