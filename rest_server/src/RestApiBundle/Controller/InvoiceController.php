@@ -52,11 +52,6 @@ class InvoiceController extends FOSRestController
      */
     public function updateInvoice(Invoices $updatedInvoice, ConstraintViolationListInterface $validationErrors)
     {
-        if (count($validationErrors) > 0) {
-            $view = $this->view([ 'errors' => $validationErrors ], Response::HTTP_BAD_REQUEST);
-            return $this->handleView($view);
-        }
-
         $updatedElementId = $updatedInvoice->getId();
 
         if(empty($updatedElementId)) {
@@ -66,6 +61,11 @@ class InvoiceController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         if(empty($em->getRepository('RestApiBundle:Invoices')->find($updatedElementId)) ) {
             throw new NotFoundHttpException();
+        }
+
+        if (count($validationErrors) > 0) {
+            $view = $this->view([ 'errors' => $validationErrors ], Response::HTTP_BAD_REQUEST);
+            return $this->handleView($view);
         }
 
         $updatedInvoice = $em->merge($updatedInvoice);
