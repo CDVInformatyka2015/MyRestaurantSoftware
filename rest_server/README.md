@@ -6,7 +6,7 @@ Open source software to take orders from customers. The system is to facilitate 
 adoption of orders and better communication between customer service and the kitchen.
 
 For details on how to download and get started with MRS_Server, see the
-[Installation][1] chapter of the documentation.
+[Installation](INSTALL.md) chapter of the documentation.
 
 What's inside?
 --------------
@@ -36,5 +36,3 @@ Commands
     - `php bin/console fos:user:promote testuser ROLE_SUPER_ADMIN` - Promowanie użytkownika na super admina
 - Controllers
     - `php bin/console generate:controller` - Generator kontrolerów
-
-[1]:  #NieMaNic
