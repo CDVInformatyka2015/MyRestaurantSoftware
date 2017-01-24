@@ -12,7 +12,7 @@ class DefaultController extends FOSRestController
 
     /**
      * Zwrot wszystkich routów dostępnych przez API
-     * @Route("/doc", name="api.Homepage")
+     * @Route("/doc", name="api.doc")
      */
     public function indexAction()
     {
@@ -56,19 +56,19 @@ class DefaultController extends FOSRestController
             ->findOneBy(['username' => $username]);
 
         if(!$user) {
-            $view = $this->view(['status' => 'unauthorized'], 403);
+            $view = $this->view(['status' => 'unauthorized'], Response::HTTP_UNAUTHORIZED);
             return $this->handleView($view);
         }
 
         if(!$this->get('security.password_encoder')->isPasswordValid($user, $password)) {
-            $view = $this->view(['status' => 'unauthorized'], 403);
+            $view = $this->view(['status' => 'unauthorized'], Response::HTTP_UNAUTHORIZED);
             return $this->handleView($view);
         }
 
         $token = $this->get('lexik_jwt_authentication.encoder')
             ->encode(['username' => $user->getUsername()]);
 
-        $view = $this->view(['token' => $token], 200);
+        $view = $this->view(['token' => $token], Response::HTTP_OK);
         return $this->handleView($view);
     }
 
