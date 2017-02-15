@@ -3,6 +3,7 @@
 namespace RestApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -25,6 +26,10 @@ class Category
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      */
     private $name;
 
@@ -32,6 +37,8 @@ class Category
      * @var string
      *
      * @ORM\Column(name="note", type="string", length=255, nullable=true)
+     *
+     * @Assert\Type("string")
      */
     private $note;
 

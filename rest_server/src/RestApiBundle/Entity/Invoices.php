@@ -3,6 +3,7 @@
 namespace RestApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Invoices
@@ -25,6 +26,12 @@ class Invoices
      * @var array
      *
      * @ORM\Column(name="invoice", type="json_array")
+     *
+     * @Assert\NotNull()
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private $invoice;
 
@@ -32,6 +39,10 @@ class Invoices
      * @var int
      *
      * @ORM\Column(name="tableNumber", type="integer")
+     *
+     * @Assert\NotNull()
+     * @Assert\Type("integer")
+     * @Assert\Range(min="1")
      */
     private $tableNumber;
 
@@ -45,6 +56,8 @@ class Invoices
      * 3 - Closed
      *
      * @ORM\Column(name="status", type="integer")
+     *
+     * @Assert\Range(min="0", max="3")
      */
     private $status = 0;
 
@@ -52,6 +65,9 @@ class Invoices
      * @var bool
      *
      * @ORM\Column(name="delivery", type="boolean")
+     *
+     * @Assert\NotNull()
+     * @Assert\Type("boolean")
      */
     private $delivery = true;
 

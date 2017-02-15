@@ -46,8 +46,9 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
+        driver:   "%database_driver%"
         host:     "%database_host%"
+        path:     "%database_path%"
         port:     "%database_port%"
         dbname:   "%database_name%"
         user:     "%database_user%"
@@ -78,3 +79,37 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\User
+
+# FOSRestBundle Configuration
+fos_rest:
+    body_converter:
+        enabled: true
+        validate: true
+        validation_errors_argument: validationErrors
+    access_denied_listener:
+        # all requests using the 'json' format will return a 403 on an access denied violation
+        json: true
+    format_listener:
+        rules:
+            -
+                fallback_format: json
+                path: ^/api
+                prefer_extension: false
+                priorities:
+                    - json
+            -
+                fallback_format: html
+                path: ^/
+                prefer_extension: true
+                priorities:
+                    - text/html
+                    - "*/*"
+    serializer:
+        serialize_null: true
+
+# Lexik JWT Bundle
+lexik_jwt_authentication:
+    private_key_path: '%jwt_private_key_path%'
+    public_key_path:  '%jwt_public_key_path%'
+    pass_phrase:      '%jwt_key_pass_phrase%'
+    token_ttl:        '%jwt_token_ttl%'
