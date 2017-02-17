@@ -28,10 +28,8 @@ class Invoices
      * @ORM\Column(name="invoice", type="text")
      *
      * @Assert\NotNull()
-     * @Assert\All({
-     *     @Assert\NotBlank,
-     *     @Assert\Type("string")
-     * })
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      */
     private $invoice;
 
