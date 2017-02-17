@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using waiter.Properties;
 
 namespace waiter
@@ -21,6 +22,14 @@ namespace waiter
         {
             _webClient = new WebClient();
             _webClient.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+
+            var contractResolver = new DefaultContractResolver();
+            contractResolver.NamingStrategy = new SnakeCaseNamingStrategy();
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                ContractResolver = contractResolver
+            };
         }
 
         public bool Log_In(string login, string password)
@@ -59,7 +68,7 @@ namespace waiter
             var invoice = new Invoice
             {
                 invoice = items.Cast<object>().Aggregate("", (current, varka) => current + (varka.ToString() + "|")),
-                tableNumber = 0,
+                tableNumber = 1,
                 delivery = 0,
                 status = 0
             };
