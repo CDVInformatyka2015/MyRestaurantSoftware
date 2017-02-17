@@ -56,8 +56,24 @@ namespace waiter
 
         public bool SubmitInvoice(ItemCollection items)
         {
-            var zamowienia = items.Cast<object>().Aggregate("", (current, varka) => current + (varka.ToString() + "|"));
-            MessageBox.Show(zamowienia);
+            var invoice = new Invoice
+            {
+                invoice = items.Cast<object>().Aggregate("", (current, varka) => current + (varka.ToString() + "|")),
+                tableNumber = 0,
+                delivery = 0,
+                status = 0
+            };
+
+            try
+            {
+                _webClient.Headers.Add("Content-Type", "application/json");
+                _webClient.UploadString(RestApiUrl + "invoice", JsonConvert.SerializeObject(invoice));
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             return false;
         }
     }

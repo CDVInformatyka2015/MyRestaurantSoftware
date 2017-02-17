@@ -69,7 +69,12 @@ namespace waiter
 
         private void Submit_OnClick(object sender, RoutedEventArgs e)
         {
-            _restaurant.SubmitInvoice(Zamowienie.Items);
+            if (_restaurant.SubmitInvoice(Zamowienie.Items))
+            {
+                MessageBox.Show("Zamówienie dokonane!");
+                return;
+            }
+            MessageBox.Show("Błąd w zamówieniu!");
         }
 
         private void Cancel_OnClick(object sender, RoutedEventArgs e)

@@ -2,6 +2,10 @@
 {
     internal class Invoice
     {
-        public string token { get; set; }
+        public int id { get; }
+        public string invoice { get; set; }
+        public int tableNumber { get; set; }
+        public int status { get; set; }
+        public int delivery { get; set; }
     }
 }
