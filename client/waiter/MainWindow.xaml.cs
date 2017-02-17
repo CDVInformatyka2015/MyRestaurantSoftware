@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,21 +29,52 @@ namespace waiter
         {
             InitializeComponent();
 
-            if (Settings.Default.token != "")
+            if (Settings.Default.token == "")
             {
-                GenerateCategory();
+                var loginWindow = new login(_restaurant);
+                loginWindow.Show();
+                this.Close();
                 return;
             }
 
-            var loginWindow = new login(_restaurant);
-            loginWindow.Show();
-            this.Close();
+            GenerateCategory();
         }
 
         private void GenerateCategory()
         {
-//            _restaurant.GetCategory();
-            MessageBox.Show(_restaurant.GetCategory().ToString());
+            var categorys = _restaurant.GetCategory();
+
+            foreach (var item in categorys)
+            {
+                ListaKategorii.Items.Add(item["name"]);
+            }
+        }
+
+        private void ListaKategorii_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var products = _restaurant.GetProductsByCategory(ListaKategorii.SelectedIndex);
+
+            ListaProduktow.Items.Clear();
+            foreach (var item in products)
+            {
+                ListaProduktow.Items.Add(item["name"]);
+            }
+        }
+
+        private void ListaProduktow_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListaProduktow.SelectedItem == null) return;
+            Zamowienie.Items.Add(ListaProduktow.SelectedItem.ToString());
+        }
+
+        private void Submit_OnClick(object sender, RoutedEventArgs e)
+        {
+            _restaurant.SubmitInvoice(Zamowienie.Items);
+        }
+
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            Zamowienie.Items.Clear();
         }
     }
 }

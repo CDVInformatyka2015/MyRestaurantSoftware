@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:waiter"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Zaloguj się do systemu!" Height="91.597" Width="300">
+        Title="Zaloguj się do systemu!" Height="95.189" Width="300">
     <Grid>
-        <TextBox x:Name="Login" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="72,3,0,0"/>
-        <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="72,31,0,0"/>
+        <TextBox x:Name="Login" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="admin" VerticalAlignment="Top" Width="120" Margin="72,3,0,0"/>
+        <TextBox x:Name="Password" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="admin" VerticalAlignment="Top" Width="120" Margin="72,31,0,0"/>
         <Label x:Name="LoginLabel" Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label x:Name="PasswordLabel" Content="Password" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Zaloguj" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="209,0,0,0" Height="54" Click="button_Click"/>
+        <Button x:Name="button" Content="Zaloguj" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="209,3,0,0" Height="54" Click="button_Click"/>
     </Grid>
 </Window>

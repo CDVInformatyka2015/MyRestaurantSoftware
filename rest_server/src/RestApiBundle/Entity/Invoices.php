@@ -23,9 +23,9 @@ class Invoices
     private $id;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="invoice", type="json_array")
+     * @ORM\Column(name="invoice", type="text")
      *
      * @Assert\NotNull()
      * @Assert\All({

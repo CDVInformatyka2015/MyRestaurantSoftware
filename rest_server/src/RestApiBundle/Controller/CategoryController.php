@@ -35,12 +35,14 @@ class CategoryController extends FOSRestController
     }
 
     /**
-     * @Route(path="category/{id}", name="category.get")
+     * @Route(path="category/{id}", name="category.getProducts")
      * @Method({"GET"})
      */
-    public function getCategory(Category $category)
+    public function getCategory($id)
     {
-        $view = $this->view($category);
+        $categories = $this->getDoctrine()->getRepository('RestApiBundle:Products')->findBy(['category' => $id]);
+
+        $view = $this->view($categories);
         return $this->handleView($view);
     }
 
@@ -54,17 +56,17 @@ class CategoryController extends FOSRestController
     {
         $updatedElementId = $updatedCategory->getId();
 
-        if(empty($updatedElementId)) {
+        if (empty($updatedElementId)) {
             throw new BadRequestHttpException('Id missing');
         }
 
         $em = $this->getDoctrine()->getManager();
-        if(empty($em->getRepository('RestApiBundle:Category')->find($updatedElementId)) ) {
+        if (empty($em->getRepository('RestApiBundle:Category')->find($updatedElementId))) {
             throw new NotFoundHttpException();
         }
 
         if (count($validationErrors) > 0) {
-            $view = $this->view([ 'errors' => $validationErrors ], Response::HTTP_BAD_REQUEST);
+            $view = $this->view(['errors' => $validationErrors], Response::HTTP_BAD_REQUEST);
             return $this->handleView($view);
         }
 
@@ -85,7 +87,7 @@ class CategoryController extends FOSRestController
     public function addCategory(Category $category, ConstraintViolationListInterface $validationErrors)
     {
         if (count($validationErrors) > 0) {
-            $view = $this->view([ 'errors' => $validationErrors ], Response::HTTP_BAD_REQUEST);
+            $view = $this->view(['errors' => $validationErrors], Response::HTTP_BAD_REQUEST);
             return $this->handleView($view);
         }
 

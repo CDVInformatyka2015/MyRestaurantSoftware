@@ -5,7 +5,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using waiter.Properties;
 
 namespace waiter
@@ -29,22 +31,34 @@ namespace waiter
                 var status = _webClient.UploadString(RestApiUrl + "login", "POST", "{\"username\": \"" + login + "\",\"password\": \"" + password + "\"}");
                 var token = JsonConvert.DeserializeObject<RestToken>(status);
                 Settings.Default.token = token.token;
-                Settings.Default.Save();
-//                _webClient.Headers.Add("Authorization", "Bearer  {{jwtToken}}");
                 return true;
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message.ToString());
+                MessageBox.Show(e.Message);
             }
             return false;
         }
-
-        public Dictionary<string, string> GetCategory()
+        
+        public JArray GetCategory()
         {
-            _webClient.Headers.Add("Authorization", "Bearer  " + Settings.Default.token);
+            _webClient.Headers.Add("Authorization", "Bearer " + Settings.Default.token);
             var response = _webClient.DownloadString(RestApiUrl + "category");
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
+            return JArray.Parse(response);
+        }
+        
+        public JArray GetProductsByCategory(int i)
+        {
+            i++;
+            var response = _webClient.DownloadString(RestApiUrl + "category/" + i);
+            return JArray.Parse(response);
+        }
+
+        public bool SubmitInvoice(ItemCollection items)
+        {
+            var zamowienia = items.Cast<object>().Aggregate("", (current, varka) => current + (varka.ToString() + "|"));
+            MessageBox.Show(zamowienia);
+            return false;
         }
     }
 }

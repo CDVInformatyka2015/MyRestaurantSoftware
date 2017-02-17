@@ -13,51 +13,35 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0"  x:Name="listBox">
-            <ListBoxItem>
-                <TextBlock TextAlignment="Center">ListBox Item #1</TextBlock>
-            </ListBoxItem>
-        </ListBox>
+        
+        <ListBox Grid.Column="0"  x:Name="Zamowienie"/>
+        
         <GridSplitter HorizontalAlignment="Right" 
                   VerticalAlignment="Stretch" 
                   Grid.Column="1" ResizeBehavior="PreviousAndNext"
-                  Width="5" Background="#FFBCBCBC"/>
-        <Grid Grid.Column="2">
+                  Width="5" Background="Red"/>
+        <Grid Name="Buttony" Grid.Column="2">
+            <Grid.Resources>
+                <Style  x:Key="listStyle" TargetType="ListBoxItem">
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <!-- Sekcja buttonów -->
-            <Button x:Name="Button1" Content="" Grid.Row="0" Grid.Column="0" />
-            <Button x:Name="Button2" Content="" Grid.Row="0" Grid.Column="1" />
-            <Button x:Name="Button3" Content="" Grid.Row="0" Grid.Column="2" />
-            <Button x:Name="Button4" Content="" Grid.Row="0" Grid.Column="3" />
-            <Button x:Name="Button5" Content="" Grid.Row="1" Grid.Column="0" />
-            <Button x:Name="Button6" Content="" Grid.Row="1" Grid.Column="1" />
-            <Button x:Name="Button7" Content="" Grid.Row="1" Grid.Column="2" />
-            <Button x:Name="Button8" Content="" Grid.Row="1" Grid.Column="3" />
-            <Button x:Name="Button9" Content="" Grid.Row="2" Grid.Column="0" />
-            <Button x:Name="Button10" Content="" Grid.Row="2" Grid.Column="1" />
-            <Button x:Name="Button11" Content="" Grid.Row="2" Grid.Column="2" />
-            <Button x:Name="Button12" Content="" Grid.Row="2" Grid.Column="3" />
-            <Button x:Name="Button13" Content="" Grid.Row="3" Grid.Column="0" />
-            <Button x:Name="Button14" Content="" Grid.Row="3" Grid.Column="1" />
-            <Button x:Name="Button15" Content="" Grid.Row="3" Grid.Column="2" />
-            <Button x:Name="Button16" Content="" Grid.Row="3" Grid.Column="3" />
-            
+            <ListBox x:Name="ListaKategorii" Grid.Row="0" Grid.Column="0" ItemContainerStyle="{StaticResource listStyle}" SelectionChanged="ListaKategorii_OnSelectionChanged"/>
+            <ListBox x:Name="ListaProduktow" Grid.Row="0" Grid.Column="1" ItemContainerStyle="{StaticResource listStyle}" SelectionChanged="ListaProduktow_OnSelectionChanged"/>
+
             <!-- Guziki funkcyjne -->
-            <Button x:Name="Cancel" Content="Anuluj zamówienie" Grid.Row="4" Grid.Column="0" BorderBrush="BlueViolet" BorderThickness="10"/>
-            <Button x:Name="Submit" Content="Wyślij" Grid.Row="4" Grid.Column="3" BorderBrush="BlueViolet" BorderThickness="10"/>
+            <Button x:Name="Cancel" Content="Anuluj zamówienie" Grid.Row="4" Grid.Column="0" BorderBrush="Red" BorderThickness="10" Click="Cancel_OnClick"/>
+            <Button x:Name="Submit" Content="Wyślij" Grid.Row="4" Grid.Column="3" BorderBrush="Red" BorderThickness="10" Click="Submit_OnClick"/>
         </Grid>
     </Grid>
 </Window>
